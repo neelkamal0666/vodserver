@@ -3,7 +3,7 @@ var mongojs = require("mongojs");
 var request = require('request');
 
 var ip_addr = '127.0.0.1';
-var port    =  '8094';
+var port    =  '8080';
 var firebase_url = "https://vodapp-6f398.firebaseio.com";
 var client = restify.createJsonClient({
     url: firebase_url
@@ -33,10 +33,10 @@ function postNewHistory(req, res, next) {
     viewed.title = req.params.title;
     viewed.video_url = req.params.video_url;
     viewed.poster_url = req.params.poster_url;
-    viewed.id = req.params.userId;
+   
     var userId = req.params.userId;
     res.setHeader('Access-Control-Allow-Origin','*');
-    client.post('/'+userId+'.json', viewed, function(err, req, resp, obj) {
+    client.put('/'+userId+'/'+req.params.id+'.json', viewed, function(err, req, resp, obj) {
         res.send(201 , obj);
         assert.ifError(err);
         console.log('%d -> %j', resp.statusCode, resp.headers);
