@@ -33,10 +33,10 @@ function postNewHistory(req, res, next) {
     viewed.title = req.params.title;
     viewed.video_url = req.params.video_url;
     viewed.poster_url = req.params.poster_url;
-    viewed.id = req.params.userId;
+   
     var userId = req.params.userId;
     res.setHeader('Access-Control-Allow-Origin','*');
-    client.put('/'+userId+'.json', viewed, function(err, req, resp, obj) {
+    client.put('/'+userId+'/'+req.params.id+'.json', viewed, function(err, req, resp, obj) {
         res.send(201 , obj);
         assert.ifError(err);
         console.log('%d -> %j', resp.statusCode, resp.headers);
